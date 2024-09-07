@@ -1,0 +1,68 @@
+<style>
+    .ranking-table-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .ranking-table {
+        background-color: #2a2e35;
+        border-radius: 10px;
+        color: #fff;
+        max-width: 600px;
+        width: 100%;
+        overflow-x: auto;
+        box-shadow: 
+            0 4px 10px rgba(0, 0, 0, 0.3), /* Sombra padrão */
+            0 0 10px rgba(255, 255, 0, 0.2); /* Sombra amarela mais suave */
+        border-collapse: collapse; /* Remove espaços entre as células */
+    }
+
+    .ranking-table th, .ranking-table td {
+        padding: 12px 15px; /* Espaçamento mais generoso */
+        text-align: center;
+    }
+
+    .ranking-table th {
+        background-color: #1c1e21;
+        font-weight: bold; /* Destaca o texto do cabeçalho */
+    }
+
+    .ranking-table tr:nth-child(even) {
+        background-color: #2a2e35;
+    }
+
+    .ranking-table tr:nth-child(odd) {
+        background-color: #3a3e47;
+    }
+
+    .ranking-table thead th {
+        border-bottom: 2px solid #ffeb3b;
+    }
+</style>
+
+<div class="ranking-table-container">
+    <table class="ranking-table">
+        <thead>
+            <tr>
+                <th colspan="4">{{ movement_desc }}</th>
+            </tr>
+            <tr>
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Record</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in dados|keys %}
+                <tr>
+                    <td>{{ dados[d]['posicao'] }} º</td>
+                    <td>{{ dados[d]['user_name'] }}</td>
+                    <td>{{ dados[d]['value'] }}</td>
+                    <td>{{ dados[d]['date']|date('d/m/Y') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

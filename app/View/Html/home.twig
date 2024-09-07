@@ -1,0 +1,66 @@
+{% include 'estrutura.html' %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #1c1e21 40%, #3a3e47); /* Fundo escuro com gradiente */
+        color: #fff;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Altura total da tela */
+    }
+
+    h1 {
+        color: #ffeb3b; /* Amarelo */
+        font-family: 'Trebuchet MS', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: #ccc; /* Cinza claro para o texto */
+    }
+
+    button {
+        font-size: 16px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background-color: #ffeb3b; /* Amarelo */
+        color: #333; /* Preto para o texto */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #fdd835; /* Amarelo mais escuro no hover */
+        color: #fff; /* Branco para o texto no hover */
+    }
+
+    .image-container {
+        margin: 20px 0;
+    }
+
+    .image-container img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<script src="app/View/js/home.js"></script>
+
+<div class="image-container">
+    <img src="app/View/Img/tecnofit.png" alt="Tecnofit">
+</div>
+
+<h1>Bem-vindo à Página Inicial</h1>
+<p>Clique no botão abaixo para ver o ranking de usuários.</p>
+
+<a href="?p=ranking">
+    <button>Mostrar Ranking</button>
+</a>

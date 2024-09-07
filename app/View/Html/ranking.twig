@@ -1,0 +1,176 @@
+<!-- Link para Bootstrap e FontAwesome -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/7d7c9bd94f.js" crossorigin="anonymous"></script>
+<script src="app/View/js/ranking.js"></script>
+
+<style>
+    /* Plano de fundo inspirado em sites de academias, com tons de azul e cinza */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #1c1e21 40%, #3a3e47); /* Fundo escuro com gradiente */
+        color: #fff;
+        text-align: center;
+    }
+
+    .scroll-container {
+        display: flex;
+        overflow-x: auto;
+        padding: 20px;
+        scroll-behavior: smooth;
+        gap: 10px;
+    }
+
+    /* Estilo dos cards com cores mais neutras e destaque esportivo */
+    .div_card {
+        border: 2px solid transparent;
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        flex: 0 0 auto;
+        width: 250px; 
+        height: 180px;
+        margin: 10px 0;
+        background-color: #2a2e35;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        text-align: center;
+        line-height: 180px;
+        font-weight: bold;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .div_card:hover {
+        transform: scale(1.08);
+        box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .div_card:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        transition: 0.5s;
+        z-index: 1;
+    }
+
+    .div_card:hover:before {
+        left: 100%;
+    }
+
+    .div_card p {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        line-height: 180px;
+        font-size: 18px;
+    }
+
+    /* Destaque adicional com amarelo no hover */
+    .div_card:hover p {
+        color: #ffeb3b; /* Amarelo para destacar os títulos dos cards ao passar o mouse */
+    }
+
+    /* Customização do Scrollbar */
+    .scroll-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+        background-color: #ffeb3b; /* Amarelo vibrante */
+        border-radius: 4px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+        background-color: #fdd835;
+    }
+
+    .scroll-container::-webkit-scrollbar-track {
+        background-color: #333;
+    }
+
+    /* Responsividade dos cards */
+    @media (max-width: 768px) {
+        .div_card {
+            width: 120px;
+            height: 120px;
+            line-height: 120px;
+        }
+    }
+
+    h1 {
+        color: white;
+        font-family: Trebuchet MS;
+    }
+
+    #loading-indicator {
+        text-align: center;
+        padding: 20px;
+    }
+
+    #loading-indicator img {
+        width: 100px; /* Aumenta o tamanho do GIF de carregamento */
+    }
+
+    /* Estilo para o botão voltar */
+    .back-button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .back-button {
+        background-color: #333; /* Cor de fundo escura */
+        border: 2px solid #ffeb3b; /* Borda amarela */
+        color: #ffeb3b; /* Cor do texto/amarelo */
+        padding: 10px;
+        font-size: 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .back-button:hover {
+        background-color: #ffeb3b; /* Cor de fundo amarela no hover */
+        color: #333; /* Cor do texto/preto no hover */
+    }
+</style>
+
+<div class="container-fluid" id="div_ranking">
+    <br>
+    <h1 align="center">Escolha uma Categoria para visualizar o ranking.</h1>
+
+    <div class="back-button-container">
+        <a href="#" class="back-button" onclick="window.history.back();">
+            <i class="fas fa-home"></i>
+        </a>
+    </div>
+
+    <hr style="border-color: #ffeb3b;">
+
+    <div class="scroll-container" id="scroll-container">
+        {% for movement_id in dados|keys %}
+            <div class="div_card" onclick="mostra_ranking('{{ movement_id }}', {{ dados[movement_id]|json_encode }});">
+                <p>{{ dados[movement_id]['descricao'] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <hr style="border-color: #ffeb3b;">
+
+    <div id="ranking-table-container"></div>
+</div>
+
+<div id="ranking-table-container">
+    <div id="loading-indicator" style="display:none;">
+        <img id="loading" src="app/View/Img/Gifs/loading3.gif" alt="Carregando...">
+    </div>
+</div>

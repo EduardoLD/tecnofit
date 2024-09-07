@@ -1,0 +1,7 @@
+{
+    "require": {
+        "twig/twig": "^3.8",
+        "datatables.net/datatables.net-dt": "^2.0",
+        "apalfrey/select2-bootstrap-5-theme": "^1.3"
+    }
+}
