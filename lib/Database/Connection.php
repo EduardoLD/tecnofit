@@ -2,28 +2,19 @@
 
 class Connection
 {
-    // private static $conn;
-
-    // public static function getConn()
-    // {
-    //     if ( self::$conn == null ) {
-    //         self::$conn = new PDO('mysql: host=localhost; dbname=db_tecnofit;', 'root', '');
-    //     }
-
-    //     return self::$conn;
-    // }
-
     protected static $db;
 
     private function __construct()
     {
         $driver   = 'mysql';
-        $host     = 'localhost';
-        $dbname   = 'Db_tecnofit';
-        $username = 'root';
+        $host     = 'sql10.freemysqlhosting.net';
+        $dbname   = 'sql10730151';
+        $username = 'sql10730151';
+        $password = 'L27NWuwhM7';  
+        $port     = '3306';  
 
         try {
-            self::$db = new PDO("{$driver}: host={$host}; dbname={$dbname}", $username);
+            self::$db = new PDO("{$driver}:host={$host};port={$port};dbname={$dbname}", $username, $password);
 
             self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             self::$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
