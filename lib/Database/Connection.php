@@ -15,6 +15,7 @@ class Connection
 
         try {
             self::$db = new PDO("{$driver}:host={$host};port={$port};dbname={$dbname}", $username, $password);
+            //self::$db = new PDO("{$driver}:host=localhost;dbname=db_analise", $username);
 
             self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             self::$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
